@@ -1,13 +1,14 @@
 import setuptools
 from setuptools.extension import Extension
-from setuptools.command.test import test
 import setuptools.command.build_ext
 from distutils.command import clean
 from distutils.file_util import copy_file
 from distutils.dir_util import mkpath, remove_tree, copy_tree
 from distutils import log
 from Cython.Build import cythonize
-from sage.env import sage_include_directories, cython_aliases, UNAME
+from sage.env import cython_aliases
+from sage.config import get_include_dirs
+import platform
 import os
 import sys
 
@@ -92,9 +93,10 @@ class BuildLibfgbCommand(setuptools.Command):
         os.chdir(cwd)
 
         log.info("Copying include and lib files.")
-        if UNAME == "Darwin":
+        uname = platform.system()
+        if uname == "Darwin":
             FGB_LIBDIR = "macosx"
-        elif UNAME == "Linux":
+        elif uname == "Linux":
             FGB_LIBDIR = "x64"
         else:
             log.error("Error installing libfgb: libfgb is not available for this platform.")
@@ -103,12 +105,6 @@ class BuildLibfgbCommand(setuptools.Command):
             copy_file(os.path.join(libfgb_builddir, f), "local/include")
         copy_tree(os.path.join(libfgb_builddir, "nv/protocol"), "local/include")
         copy_tree(os.path.join(libfgb_builddir, "nv/maple/C", FGB_LIBDIR), "local/lib")
-
-class TestCommand(test):
-    def run_tests(self):
-        errno = os.system("sage -t --force-lib --optional=sage,fgb_sage %s" % SRC)
-        if errno != 0:
-            sys.exit(1)
 
 class CleanCommand(clean.clean):
     def run(self):
@@ -143,20 +139,20 @@ if os.path.getsize(pyx_dst) == 0:
 ext_modules = [
     cythonize(
         [Extension("fgb_sage." + name,
-            include_dirs=["local/include"] + sage_include_directories(),
+            include_dirs=["local/include"] + [str(p) for p in get_include_dirs()],
             library_dirs=["local/lib"],
             libraries=["fgb", "fgbexp", "gb", "gbexp", "minpoly", "minpolyvgf", "gmp", "m"],
             extra_compile_args=["-std=c++11", "-fopenmp"],
             extra_link_args=["-fopenmp"],
             define_macros=[
                 ("LIBMODE", libmode),
-                ("FGB_MAC", 1 if UNAME == 'Darwin' else 0),
+                ("FGB_MAC", 1 if platform.system() == 'Darwin' else 0),
                 ("FGB_MAC_MAX_INPUT", 100000)],
             sources=[os.path.join(SRC, name + ".pyx")]
         )],
         compile_time_env=dict(
             PY_LIBMODE=libmode,
-            PY_FGB_MAC=(UNAME == 'Darwin')),
+            PY_FGB_MAC=(platform.system() == 'Darwin')),
         compiler_directives=dict(language_level=2),
         annotate=False,
         aliases=cython_aliases()
@@ -167,7 +163,6 @@ setuptools.setup(
     cmdclass={
         'build_libfgb': BuildLibfgbCommand,
         'build_ext': BuildExtCommand,
-        'test': TestCommand,
         'clean': CleanCommand,
         },
     name="fgb_sage",

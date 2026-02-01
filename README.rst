@@ -33,14 +33,11 @@ Installation
 **Requirements**: Linux with a recent version of `Sage <SAGE_>`_
 (tested with Sage 9.5.rc0 on Ubuntu 20.04 as well as with Sage 9.6 from Arch Linux).
 
-First, clone the `repository from GitHub <fgb_sage_gh_>`_ and then compile and
-run the tests::
+First, clone the `repository from GitHub <fgb_sage_gh_>`_::
 
     git clone https://github.com/mwageringel/fgb_sage.git && cd fgb_sage
-    sage setup.py test
 
-After the tests passed successfully, run the following command to install the
-package for use with Sage::
+Run the following command to install the package for use with Sage::
 
     sage -python -m pip install --upgrade --no-index -v .
 
@@ -53,7 +50,7 @@ Installing into a virtual environment, assuming Sage is installed system-wide::
 
     python -m venv --system-site-packages ./sage-venv  # assumes that sage and python-setuptools are available system-wide
     source ./sage-venv/bin/activate                    # redefines `python` and `pip` using virtual environment
-    python -m pip install --upgrade --no-index -v .
+    python -m pip install --upgrade --no-index --no-build-isolation -v .
     cd sage-venv && python -m IPython                  # changing directory is important
 
         In [1]: from sage.all import *
@@ -61,6 +58,10 @@ Installing into a virtual environment, assuming Sage is installed system-wide::
         In [3]: I = sage.rings.ideal.Cyclic(R)
         In [4]: import fgb_sage
         In [5]: gb = fgb_sage.groebner_basis(I)
+
+Run this test to check it works::
+
+    sage -t --force-lib --optional=sage,fgb_sage ./fgb_sage
 
 Packaged versions of Sage
 -------------------------
