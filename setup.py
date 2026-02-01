@@ -11,7 +11,8 @@ from sage.env import sage_include_directories, cython_aliases, UNAME
 import os
 import sys
 
-UPSTREAM_TAR_URL = "https://www-polsys.lip6.fr/~jcf/FGb/C/@downloads/call_FGb6.maclinux.x64.tar.gz"
+# UPSTREAM_TAR_URL = "https://www-polsys.lip6.fr/~jcf/FGb/C/@downloads/call_FGb6.maclinux.x64.tar.gz"
+UPSTREAM_TAR_URL = "https://web.archive.org/web/20210310210712id_/https://www-polsys.lip6.fr/~jcf/FGb/C/@downloads/call_FGb6.maclinux.x64.tar.gz"
 UPSTREAM_TAR_BASEDIR = "call_FGb"
 
 cwd = os.path.abspath(os.getcwd())

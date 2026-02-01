@@ -14,7 +14,7 @@ This package is a `SageMath <SAGE_>`_ interface to FGb_ and
 can be installed as a Python package for use with Sage. It provides a simple
 link between the C-interface of FGb and polynomials and ideals in Sage.
 
-FGb is a C-library by J. C. Faugère for Gröbner basis computations, with
+FGb is a C-library by J. C. Faugère for Gröbner basis computations (for academic use only), with
 support for:
 
 * Gröbner bases over ℚ and finite prime fields
@@ -97,7 +97,7 @@ Issues
   use a different Gröbner basis algorithm `available in Sage <sage_docs_gb_>`_.
 
 .. _SAGE: https://www.sagemath.org/
-.. _FGb: https://www-polsys.lip6.fr/~jcf/FGb/index.html
+.. _FGb: https://web.archive.org/web/20240525051253/https://www-polsys.lip6.fr/~jcf/FGb/index.html
 .. _fgb_sage_gh: https://github.com/mwageringel/fgb_sage
 .. _fgb_sage_rdt: https://fgb-sage.readthedocs.io/en/latest/#module-fgb_sage
 .. _sage_docs_gb: https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/multi_polynomial_ideal.html#sage.rings.polynomial.multi_polynomial_ideal.MPolynomialIdeal.groebner_basis

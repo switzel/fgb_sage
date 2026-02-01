@@ -10,7 +10,7 @@ For academic use, only.
 
 == Upstream Contact ==
 
-J.C. Faugère, see https://www-polsys.lip6.fr/~jcf/FGb/index.html.
+J.C. Faugère, see https://web.archive.org/web/20240525051253/https://www-polsys.lip6.fr/~jcf/FGb/index.html.
 
 == Dependencies ==
 
